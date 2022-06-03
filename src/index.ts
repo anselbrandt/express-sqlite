@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from "express";
 import path from "path";
 import { open } from "sqlite";
 import sqlite3 from "sqlite3";
-import router from "../routes";
+import router from "./routes";
 
 async function main() {
   const app: Express = express();

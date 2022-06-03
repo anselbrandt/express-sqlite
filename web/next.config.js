@@ -5,6 +5,9 @@ const nextConfig = {
     loader: "akamai",
     path: "",
   },
+  experimental: {
+    outputStandalone: true,
+  },
 };
 
 module.exports = nextConfig;
