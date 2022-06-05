@@ -1,29 +1,25 @@
+import Database from "better-sqlite3";
+import bodyParser from "body-parser";
 import express, { Express, Request, Response } from "express";
 import path from "path";
-import { open } from "sqlite";
-import sqlite3 from "sqlite3";
+import noteStore from "./model/notes";
 import router from "./routes";
 
 async function main() {
   const app: Express = express();
   const port = 5000;
 
-  const db = await open({
-    filename: "./notes.db",
-    driver: sqlite3.Database,
-  });
+  const db = new Database("./notes.db", { verbose: console.log });
 
-  await db.exec(`CREATE TABLE IF NOT EXISTS "notes" (
-		"id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-		"contents" TEXT,
-		"createdAt" INTEGER,
-		"updatedAt" INTEGER
-	);`);
+  const store = noteStore(db);
+
+  store.init();
 
   const r = router;
 
+  app.use(bodyParser.json());
   app.use("/images", r.images);
-  app.use("/api/notes", r.notes);
+  app.use("/api/notes", r.notes(store));
   app.use("/api/graphql", r.graphql);
   app.use("/", r.web);
 

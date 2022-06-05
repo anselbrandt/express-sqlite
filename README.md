@@ -11,6 +11,26 @@ docker build -t anselbrandt/express-sqlite:latest .
 docker run -p 5000:5000 anselbrandt/express-sqlite:latest
 ```
 
+# Develop
+
+```
+yarn watch
+
+# then, in a second terminal
+
+yarn dev
+```
+
+# Curl
+
+```
+curl -X POST http://localhost:5000/api/notes -H 'Content-Type: application/json' -d '{"contents":"Read War and Peace."}'
+
+curl -X PUT http://localhost:5000/api/notes -H 'Content-Type: application/json' -d '{"id":1,"contents":"Read War and Peace again."}'
+
+curl -X DELETE http://localhost:5000/api/notes -H 'Content-Type: application/json' -d '{"id":1}'
+```
+
 # Deploy
 
 Copy the contents of `git-hooks/pre-push.sh` to `.git/hooks/pre-push.sample` and rename to `pre-push`
