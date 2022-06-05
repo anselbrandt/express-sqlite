@@ -18,6 +18,7 @@ async function main() {
   const r = router;
 
   app.use(bodyParser.json());
+  app.use("/graphql", r.graphql);
   app.use("/images", r.images);
   app.use("/api/notes", r.notes(store));
   app.use("/api/graphql", r.graphql);

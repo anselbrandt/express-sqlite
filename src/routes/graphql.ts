@@ -1,9 +1,22 @@
-import express, { Request, Response } from "express";
+import { graphqlHTTP } from "express-graphql";
+import { buildSchema } from "graphql";
 
-const graphql = express.Router();
+const schema = buildSchema(`
+type Query {
+  hello: String
+}
+`);
 
-graphql.get("/", (req: Request, res: Response) => {
-  res.send("graphql");
+const root = {
+  hello: () => {
+    return "Hello world!";
+  },
+};
+
+const graphql = graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
 });
 
 export default graphql;
