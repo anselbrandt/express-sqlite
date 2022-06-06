@@ -17,11 +17,12 @@ async function main() {
 
   const r = router;
 
+  // bodyParser may need to run after graphql
   app.use(bodyParser.json());
   app.use("/graphql", r.graphql);
   app.use("/images", r.images);
   app.use("/api/notes", r.notes(store));
-  app.use("/api/graphql", r.graphql);
+  app.use("/api/graphql", r.graphql(store));
   app.use("/", r.web);
 
   app.get("/", (req: Request, res: Response) => {

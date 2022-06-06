@@ -1,5 +1,6 @@
 import { graphqlHTTP } from "express-graphql";
 import { buildSchema } from "graphql";
+import { NoteStore } from "../model/notes";
 
 const schema = buildSchema(`
 type Query {
@@ -13,10 +14,11 @@ const root = {
   },
 };
 
-const graphql = graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-});
+const graphql = (store: NoteStore) =>
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  });
 
 export default graphql;
